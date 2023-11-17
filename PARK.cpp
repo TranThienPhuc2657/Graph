@@ -17,13 +17,11 @@ stack <pair<int,int>> st;
 
 void dfs(int u, int pre) {
     num[u]=low[u]=++cnt;
-    int child=0;
     for (auto v:a[u]) if (v!=pre) if (!num[v]){
         st.push({u,v});
-        child++;
         dfs(v,u);
         low[u]=min(low[u],low[v]);
-        if ((u==pre and child>=2) or low[v]>=num[u]) {
+        if (low[v]>=num[u]) {
             pair <int,int> p={0,0};
             biconnected++;
             while (p!=make_pair(u,v)) {
