@@ -17,17 +17,18 @@ stack <pair<int,int>> st; //Stack de luu cac canh
 
 void dfs(int u,int pre) {
     num[u]=low[u]=++cnt;
-    int child=0;
     for (auto v:a[u]) if (v!=pre) if (!num[v]) {
         st.push({u,v}); //Neu nhu do thi co cac canh 1,2; 2,3; 3,1 thi canh 3,1
                         //khong duoc lay vao stack tai gap num[v] roi.
                         //Neu nhu day la bai liet ke cac canh thuoc thanh phan
                         //song lien thong thi chi can in ra them canh st.top().se,u
                         //hay cu the o vi du la 3,1 (st.top={2,3}, u=1)
-        child++;
         dfs(v,u);
         low[u]=min(low[u],low[v]);
-        if ((u==pre and child>=2) or low[v]>=num[u]) { //Neu u la khop
+        if (low[v]>=num[u]) { //Neu u la khop (khong tinh cai truong hop u==pre va child>=2
+                              //vi neu u la goc ma trong do thi chi co 1 thanh phan song lien thong
+                              //hay co 1 thanh phan song lien thong noi voi goc thi van tinh cai
+                              //song lien thong day
             pair <int,int> p={0,0};
             set <int> s;
             while (p!=make_pair(u,v)) { //Lay cac canh cho toi het u,v
