@@ -33,10 +33,11 @@ void Floyd_Warshall() {
     FOR(k,1,n)
         FOR(u,1,n)
             FOR(v,1,n)
-                if (d[u][v]>(ll)d[u][k]+d[k][v]) {
-                    d[u][v]=d[u][k]+d[k][v];
-                    trace[u][v]=trace[k][v];
-                }
+                if (d[u][k]!=INT_MAX and d[k][v]!=INT_MAX) //if there is path from u to k and k to v
+                    if (d[u][v]>d[u][k]+d[k][v]) {
+                        d[u][v]=d[u][k]+d[k][v];
+                        trace[u][v]=trace[k][v];
+                    }
 }
 
 int main() {
